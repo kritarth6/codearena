@@ -10,7 +10,8 @@
     "test": "node --import tsx --test tests/auth.test.ts tests/judge0.test.ts tests/mlRating.test.ts tests/submissions.test.ts",
     "seed": "node scripts/seedDemoData.mjs",
     "verify": "node scripts/verifyFirebase.mjs",
-    "setup:demo": "node scripts/setupShowcaseAccounts.mjs"
+    "setup:demo": "node scripts/setupShowcaseAccounts.mjs",
+    "seed:rich": "node scripts/seedRichData.mjs"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",

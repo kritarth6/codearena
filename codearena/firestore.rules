@@ -27,11 +27,12 @@ service cloud.firestore {
       // Authenticated users can read profiles for leaderboards and directories
       allow read: if isAuthenticated();
       
-      // Registration: A user can create their own profile ONLY with 'student' role
-      allow create: if isAuthenticated() &&
+      // Registration: A user can create their own profile with 'student' role, or Admin can provision
+      allow create: if (isAuthenticated() &&
                       request.auth.uid == userId &&
                       request.resource.data.role == 'student' &&
-                      request.resource.data.status == 'active';
+                      request.resource.data.status == 'active')
+                    || isAdmin();
                       
       // Users can update their own personal details, but CANNOT self-elevate roles or ratings
       allow update: if (isAuthenticated() && request.auth.uid == userId &&
@@ -62,7 +63,7 @@ service cloud.firestore {
         resource.data.studentId == request.auth.uid || isFacultyOrAdmin()
       );
       
-      allow create: if isAuthenticated() && request.resource.data.studentId == request.auth.uid;
+      allow create: if (isAuthenticated() && request.resource.data.studentId == request.auth.uid) || isAdmin();
       allow update, delete: if isAdmin();
     }
   }
